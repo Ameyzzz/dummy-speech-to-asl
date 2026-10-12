@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="SIGNLYF ASL to Speech">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SIGNLYF">
+    <link rel="manifest" href="../manifest.json">
+    <title>ASL → Text | SIGNLYF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/modes.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="app-header">
+        <div class="header-logo">
+            <div class="logo-icon">🤟</div>
+            <span class="logo-name">SIGN<span>LYF</span></span>
+        </div>
+        <span class="header-tagline">Sign it. Say it. Bridge it.</span>
+        <div class="header-actions">
+            <button class="header-icon-btn" title="Toggle theme">☀️</button>
+            <div class="user-pill">
+                <div class="user-avatar">S</div>
+                <span class="user-name">SIGNLYF</span>
+                <span class="user-chevron">▾</span>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar">
+        <a href="../index.html" class="nav-item">
+            <span class="nav-icon">🏠</span> Home
+        </a>
+        <a href="history.html" class="nav-item">
+            <span class="nav-icon">🕐</span> History
+        </a>
+        <a href="asl-to-speech.html" class="nav-item active">
+            <span class="nav-icon">📖</span> ASL → Text
+        </a>
+        <a href="speech-to-asl.html" class="nav-item">
+            <span class="nav-icon">👥</span> Text → ASL
+        </a>
+        <a href="settings.html" class="nav-item">
+            <span class="nav-icon">⚙️</span> Settings
+        </a>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-card">
+            <div class="sidebar-card-icon">🙌</div>
+            <p>More inclusion.<br>A more connected world.</p>
+            <small>♥</small>
+        </div>
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="app-main">
+
+        <div class="mode-page-header reveal">
+            <p class="eyebrow">MODE 01</p>
+            <h1>ASL → Text</h1>
+            <p>Use your camera to communicate using American Sign Language — in real time.</p>
+        </div>
+
+        <div class="mode-layout">
+
+            <!-- Camera Card -->
+            <div class="mode-card-full reveal reveal-delay-1">
+
+                <div class="mode-card-header">
+                    <div class="mode-card-title">
+                        <div class="mode-card-icon">🤟</div>
+                        <div>
+                            <h3>Camera Feed</h3>
+                            <p>Show your sign, get the text.</p>
+                        </div>
+                    </div>
+                    <span class="status-badge offline" id="camera-status">OFFLINE</span>
+                </div>
+
+                <div class="cam-area">
+
+                    <div class="camera-box">
+                        <video id="camera" autoplay playsinline muted></video>
+
+                        <div id="camera-placeholder" class="cam-empty">
+                            <div class="cam-empty-icon">📷</div>
+                            <p>Camera is currently off</p>
+                            <small>Allow camera access to begin</small>
+                        </div>
+
+                        <div class="cam-detecting" id="cam-detecting" style="display:none;">Detecting signs...</div>
+
+                        <div class="cam-corner tl"></div>
+                        <div class="cam-corner tr"></div>
+                        <div class="cam-corner bl"></div>
+                        <div class="cam-corner br"></div>
+                    </div>
+
+                    <!-- Detected -->
+                    <div class="detected-card">
+                        <div class="det-row">
+                            <span class="det-label">Detected Text</span>
+                            <span class="conf-pill" id="confidence-badge" style="display:none;">95% confidence</span>
+                        </div>
+                        <div class="det-word" id="recognized-text">—</div>
+                        <div class="det-phrase" id="detected-phrase" style="display:none;">
+                            💬 "Hello, how are you?"
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cam-controls">
+                    <button class="btn-primary" id="start-camera">▶ Start Camera</button>
+                    <button class="btn-secondary" id="stop-camera">■ Stop</button>
+                </div>
+
+            </div>
+
+
+            <!-- Output Panel -->
+            <div class="output-panel reveal reveal-delay-2">
+
+                <div class="output-panel-header">
+                    <div>
+                        <div class="output-panel-title">Recognized Speech</div>
+                        <div class="output-panel-sub">ASL → English translation</div>
+                    </div>
+                    <span class="status-badge offline" id="detection-status">Waiting</span>
+                </div>
+
+                <div class="output-body">
+
+                    <div class="big-text-display empty" id="recognized-output">
+                        Waiting for signs...
+                    </div>
+
+                    <div class="output-actions-row">
+                        <button class="btn-primary" id="speak-button">🔊 Speak</button>
+                        <button class="btn-secondary" id="clear-button">↺ Clear</button>
+                    </div>
+
+                </div>
+
+                <div class="info-strip">
+                    <div class="info-cell">
+                        <label>Status</label>
+                        <span id="model-status">Waiting</span>
+                    </div>
+                    <div class="info-cell">
+                        <label>Model</label>
+                        <span>Not connected</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-bottom-nav">
+    <a href="../index.html" class="mbn-item"><span>🏠</span><small>Home</small></a>
+    <a href="history.html" class="mbn-item"><span>🕐</span><small>History</small></a>
+    <a href="asl-to-speech.html" class="mbn-item active"><span>🤟</span><small>ASL</small></a>
+    <a href="speech-to-asl.html" class="mbn-item"><span>🔤</span><small>Text</small></a>
+    <a href="settings.html" class="mbn-item"><span>⚙️</span><small>Settings</small></a>
+</nav>
+
+<script src="../js/asl-to-speech.js"></script>
+<script src="../js/app.js"></script>
+
+</body>
+</html>

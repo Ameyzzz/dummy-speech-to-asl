@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="AI-powered communication between ASL and speech.">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SIGNLYF">
+    <link rel="manifest" href="manifest.json">
+    <title>SIGNLYF — AI Communication Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- ========================= HEADER ========================= -->
+    <header class="app-header">
+
+        <div class="header-logo">
+            <div class="logo-icon">🤟</div>
+            <span class="logo-name">SIGN<span>LYF</span></span>
+        </div>
+
+        <span class="header-tagline">Sign it. Say it. Bridge it.</span>
+
+        <div class="header-actions">
+            <button class="header-icon-btn" title="Toggle theme">☀️</button>
+            <div class="user-pill">
+                <div class="user-avatar">S</div>
+                <span class="user-name">SIGNLYF</span>
+                <span class="user-chevron">▾</span>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- ========================= SIDEBAR ========================= -->
+    <aside class="app-sidebar">
+
+        <a href="index.html" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            Home
+        </a>
+
+        <a href="pages/history.html" class="nav-item">
+            <span class="nav-icon">🕐</span>
+            History
+        </a>
+
+        <a href="pages/asl-to-speech.html" class="nav-item">
+            <span class="nav-icon">📖</span>
+            ASL → Text
+        </a>
+
+        <a href="pages/speech-to-asl.html" class="nav-item">
+            <span class="nav-icon">👥</span>
+            Text → ASL
+        </a>
+
+        <a href="pages/settings.html" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            Settings
+        </a>
+
+        <div class="sidebar-spacer"></div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-card-icon">🙌</div>
+            <p>More inclusion.<br>A more connected world.</p>
+            <small>♥</small>
+        </div>
+
+    </aside>
+
+
+    <!-- ========================= MAIN ========================= -->
+    <main class="app-main">
+
+        <!-- Page Header -->
+        <div class="page-header reveal">
+            <div class="page-header-left">
+                <h1>Hello, there 👋</h1>
+                <p>Translate between American Sign Language and text — in real time.</p>
+            </div>
+            <div class="page-header-right">
+                Different hands.<br>Same words. ♥
+            </div>
+        </div>
+
+
+        <!-- ========================= TRANSLATOR ROW ========================= -->
+        <div class="translator-row reveal reveal-delay-1">
+
+            <!-- LEFT: ASL → Text -->
+            <div class="trans-panel">
+
+                <div class="trans-panel-header">
+                    <div class="trans-panel-title">
+                        <div class="trans-icon">🤟</div>
+                        <div>
+                            <h3>ASL → Text</h3>
+                            <p>Show your sign, get the text.</p>
+                        </div>
+                    </div>
+                    <span class="cam-status offline" id="cam-status-badge">Camera Ready</span>
+                </div>
+
+                <!-- Camera -->
+                <div class="camera-view-box">
+                    <video id="camera" autoplay playsinline muted></video>
+
+                    <div id="cam-placeholder" class="cam-placeholder">
+                        <div class="cam-placeholder-icon">📷</div>
+                        <p>Camera is off</p>
+                        <small>Click Start Camera to begin</small>
+                    </div>
+
+                    <div class="cam-overlay-badge" id="cam-overlay" style="display:none;">
+                        Detecting signs...
+                    </div>
+
+                    <!-- Corner marks -->
+                    <div class="cam-corner tl"></div>
+                    <div class="cam-corner tr"></div>
+                    <div class="cam-corner bl"></div>
+                    <div class="cam-corner br"></div>
+
+                    <button class="cam-snapshot-btn" title="Snapshot">📸</button>
+                </div>
+
+                <!-- Detected Text -->
+                <div class="detected-text-area">
+                    <div class="detected-label-row">
+                        <span class="detected-label">Detected Text</span>
+                        <span class="confidence-badge" id="confidence-badge" style="display:none;">95% confidence</span>
+                    </div>
+                    <div class="detected-word" id="recognized-text">—</div>
+                    <div class="detected-phrase" id="detected-phrase" style="display:none;">
+                        💬 &ldquo;Hello, how are you?&rdquo;
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="panel-actions">
+                    <button class="btn-primary" id="start-camera">
+                        ▶ Start Camera
+                    </button>
+                    <button class="btn-secondary" id="stop-camera">
+                        ■ Stop
+                    </button>
+                    <button class="btn-secondary" id="speak-camera-btn">
+                        🔊 Speak
+                    </button>
+                    <button class="btn-secondary" id="clear-button">
+                        ↺ Clear
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Divider + swap -->
+            <div class="trans-panel-divider">
+                <div class="swap-btn-wrap">
+                    <button class="swap-btn" title="Swap modes" onclick="window.location.href='pages/speech-to-asl.html'">⇄</button>
+                </div>
+            </div>
+
+            <!-- RIGHT: Text → ASL -->
+            <div class="trans-panel">
+
+                <div class="trans-panel-header">
+                    <div class="trans-panel-title">
+                        <div class="trans-icon text-icon">🔤</div>
+                        <div>
+                            <h3>Text → ASL</h3>
+                            <p>Type your message, see it in sign.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input -->
+                <textarea
+                    class="asl-textarea"
+                    id="speech-text"
+                    placeholder="Hello, how are you?"
+                    maxlength="200"
+                    rows="3"
+                    oninput="updateCharCount(this)"></textarea>
+                <div class="char-count"><span id="char-count">0</span>/200</div>
+
+                <!-- Mic row -->
+                <div class="mic-row">
+                    <button class="mic-btn-inline" id="microphone-button">
+                        🎙️ Start Speaking
+                    </button>
+                    <span style="font-size:12px; color:var(--text-faint);" id="mic-status">Microphone off</span>
+                </div>
+
+                <!-- Translate button -->
+                <button class="btn-primary" id="translate-button" style="width:100%; margin-bottom:0;">
+                    ▶ Translate to ASL
+                </button>
+
+                <!-- ASL Animation -->
+                <div class="asl-animation-box" id="asl-player" style="position:relative; overflow:hidden; min-height:220px; padding:0;">
+                    <canvas id="home-avatar-canvas" style="width:100%; height:100%; min-height:220px; display:block; border-radius:14px;"></canvas>
+                    <div class="asl-caption" id="asl-caption" style="display:none; position:absolute; bottom:10px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.75); padding:5px 14px; border-radius:16px; font-weight:600; color:#fff; font-size:13px; z-index:10;">
+                        ▶ Ready
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= BOTTOM ROW ========================= -->
+        <div class="bottom-row">
+
+            <!-- Recent Translations -->
+            <div class="card reveal reveal-delay-2">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">🕐</span>
+                        Recent Translations
+                    </div>
+                    <a href="pages/history.html" class="card-link">View all →</a>
+                </div>
+
+                <div class="history-list" id="history-list">
+
+                    <div class="history-item">
+                        <div class="history-icon">🤟</div>
+                        <div class="history-info">
+                            <div class="history-mode">ASL → Text</div>
+                            <div class="history-text">Hello</div>
+                        </div>
+                        <span class="history-time">Today, 2:14 PM</span>
+                        <button class="history-copy" title="Copy">📋</button>
+                    </div>
+
+                    <div class="history-item">
+                        <div class="history-icon">🔤</div>
+                        <div class="history-info">
+                            <div class="history-mode">Text → ASL</div>
+                            <div class="history-text">Thank you</div>
+                        </div>
+                        <span class="history-time">Today, 1:32 PM</span>
+                        <button class="history-copy" title="Copy">📋</button>
+                    </div>
+
+                    <div class="history-item">
+                        <div class="history-icon">🤟</div>
+                        <div class="history-info">
+                            <div class="history-mode">ASL → Text</div>
+                            <div class="history-text">How are you?</div>
+                        </div>
+                        <span class="history-time">Yesterday, 5:21 PM</span>
+                        <button class="history-copy" title="Copy">📋</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Quick Access -->
+            <div class="card reveal reveal-delay-3">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="card-title-icon">⚡</span>
+                        Quick Access
+                    </div>
+                </div>
+
+                <div class="quick-grid">
+
+                    <a href="pages/asl-to-speech.html" class="quick-item">
+                        <div class="quick-item-icon qi-blue">🔤</div>
+                        <div class="quick-item-info">
+                            <strong>Alphabet</strong>
+                            <span>Learn ASL letters</span>
+                        </div>
+                        <span class="quick-chevron">›</span>
+                    </a>
+
+                    <a href="pages/speech-to-asl.html" class="quick-item">
+                        <div class="quick-item-icon qi-green">💬</div>
+                        <div class="quick-item-info">
+                            <strong>Common Phrases</strong>
+                            <span>Useful everyday signs</span>
+                        </div>
+                        <span class="quick-chevron">›</span>
+                    </a>
+
+                    <a href="pages/asl-to-speech.html" class="quick-item">
+                        <div class="quick-item-icon qi-purple">🎯</div>
+                        <div class="quick-item-info">
+                            <strong>Practice Mode</strong>
+                            <span>Test your skills</span>
+                        </div>
+                        <span class="quick-chevron">›</span>
+                    </a>
+
+                    <a href="pages/settings.html" class="quick-item">
+                        <div class="quick-item-icon qi-orange">⚙️</div>
+                        <div class="quick-item-info">
+                            <strong>Settings</strong>
+                            <span>Camera, text & more</span>
+                        </div>
+                        <span class="quick-chevron">›</span>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</div><!-- end app-shell -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-bottom-nav">
+    <a href="index.html" class="mbn-item active"><span>🏠</span><small>Home</small></a>
+    <a href="pages/history.html" class="mbn-item"><span>🕐</span><small>History</small></a>
+    <a href="pages/asl-to-speech.html" class="mbn-item"><span>🤟</span><small>ASL</small></a>
+    <a href="pages/speech-to-asl.html" class="mbn-item"><span>🔤</span><small>Text</small></a>
+    <a href="pages/settings.html" class="mbn-item"><span>⚙️</span><small>Settings</small></a>
+</nav>
+
+<!-- JAVASCRIPT -->
+<script src="js/avatar-renderer.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="description" content="SIGNLYF — Translation History">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="../manifest.json">
+    <title>History | SIGNLYF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/history.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="app-header">
+        <div class="header-logo">
+            <div class="logo-icon">🤟</div>
+            <span class="logo-name">SIGN<span>LYF</span></span>
+        </div>
+        <span class="header-tagline">Sign it. Say it. Bridge it.</span>
+        <div class="header-actions">
+            <button class="header-icon-btn" title="Toggle theme" id="theme-btn">☀️</button>
+            <div class="user-pill">
+                <div class="user-avatar">S</div>
+                <span class="user-name">SIGNLYF</span>
+                <span class="user-chevron">▾</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar">
+        <a href="../index.html" class="nav-item"><span class="nav-icon">🏠</span> Home</a>
+        <a href="history.html"  class="nav-item active"><span class="nav-icon">🕐</span> History</a>
+        <a href="asl-to-speech.html" class="nav-item"><span class="nav-icon">📖</span> ASL → Text</a>
+        <a href="speech-to-asl.html" class="nav-item"><span class="nav-icon">👥</span> Text → ASL</a>
+        <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span> Settings</a>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-card">
+            <div class="sidebar-card-icon">🙌</div>
+            <p>More inclusion.<br>A more connected world.</p>
+            <small>♥</small>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="app-main">
+
+        <!-- Page Header -->
+        <div class="page-header reveal">
+            <div class="page-header-left">
+                <h1>History 🕐</h1>
+                <p>All your recent ASL and text translations.</p>
+            </div>
+            <button class="btn-danger" id="clear-all-btn">🗑️ Clear All</button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar reveal reveal-delay-1">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="asl-to-text">ASL → Text</button>
+            <button class="filter-btn" data-filter="text-to-asl">Text → ASL</button>
+            <div class="filter-search">
+                <span>🔍</span>
+                <input type="text" id="search-input" placeholder="Search translations..." />
+            </div>
+        </div>
+
+        <!-- History List -->
+        <div class="history-full-list reveal reveal-delay-2" id="history-full-list">
+
+            <!-- Date Group -->
+            <div class="history-date-group">
+                <div class="history-date-label">Today</div>
+
+                <div class="history-full-item" data-type="asl-to-text">
+                    <div class="hfi-icon qi-blue">🤟</div>
+                    <div class="hfi-body">
+                        <div class="hfi-meta">
+                            <span class="hfi-mode">ASL → Text</span>
+                            <span class="hfi-time">2:14 PM</span>
+                        </div>
+                        <div class="hfi-text">Hello</div>
+                        <div class="hfi-sub">Detected with 95% confidence</div>
+                    </div>
+                    <div class="hfi-actions">
+                        <button class="hfi-btn" title="Copy" onclick="copyText('Hello', this)">📋</button>
+                        <button class="hfi-btn" title="Speak" onclick="speakText('Hello')">🔊</button>
+                        <button class="hfi-btn danger" title="Delete" onclick="deleteItem(this)">🗑️</button>
+                    </div>
+                </div>
+
+                <div class="history-full-item" data-type="text-to-asl">
+                    <div class="hfi-icon" style="background:var(--teal-light)">🔤</div>
+                    <div class="hfi-body">
+                        <div class="hfi-meta">
+                            <span class="hfi-mode">Text → ASL</span>
+                            <span class="hfi-time">1:32 PM</span>
+                        </div>
+                        <div class="hfi-text">Thank you</div>
+                        <div class="hfi-sub">Converted to ASL animation</div>
+                    </div>
+                    <div class="hfi-actions">
+                        <button class="hfi-btn" title="Copy" onclick="copyText('Thank you', this)">📋</button>
+                        <button class="hfi-btn" title="Speak" onclick="speakText('Thank you')">🔊</button>
+                        <button class="hfi-btn danger" title="Delete" onclick="deleteItem(this)">🗑️</button>
+                    </div>
+                </div>
+
+                <div class="history-full-item" data-type="asl-to-text">
+                    <div class="hfi-icon qi-blue">🤟</div>
+                    <div class="hfi-body">
+                        <div class="hfi-meta">
+                            <span class="hfi-mode">ASL → Text</span>
+                            <span class="hfi-time">11:05 AM</span>
+                        </div>
+                        <div class="hfi-text">Good morning</div>
+                        <div class="hfi-sub">Detected with 88% confidence</div>
+                    </div>
+                    <div class="hfi-actions">
+                        <button class="hfi-btn" title="Copy" onclick="copyText('Good morning', this)">📋</button>
+                        <button class="hfi-btn" title="Speak" onclick="speakText('Good morning')">🔊</button>
+                        <button class="hfi-btn danger" title="Delete" onclick="deleteItem(this)">🗑️</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Group -->
+            <div class="history-date-group">
+                <div class="history-date-label">Yesterday</div>
+
+                <div class="history-full-item" data-type="asl-to-text">
+                    <div class="hfi-icon qi-blue">🤟</div>
+                    <div class="hfi-body">
+                        <div class="hfi-meta">
+                            <span class="hfi-mode">ASL → Text</span>
+                            <span class="hfi-time">5:21 PM</span>
+                        </div>
+                        <div class="hfi-text">How are you?</div>
+                        <div class="hfi-sub">Detected with 91% confidence</div>
+                    </div>
+                    <div class="hfi-actions">
+                        <button class="hfi-btn" title="Copy" onclick="copyText('How are you?', this)">📋</button>
+                        <button class="hfi-btn" title="Speak" onclick="speakText('How are you?')">🔊</button>
+                        <button class="hfi-btn danger" title="Delete" onclick="deleteItem(this)">🗑️</button>
+                    </div>
+                </div>
+
+                <div class="history-full-item" data-type="text-to-asl">
+                    <div class="hfi-icon" style="background:var(--teal-light)">🔤</div>
+                    <div class="hfi-body">
+                        <div class="hfi-meta">
+                            <span class="hfi-mode">Text → ASL</span>
+                            <span class="hfi-time">3:47 PM</span>
+                        </div>
+                        <div class="hfi-text">Nice to meet you</div>
+                        <div class="hfi-sub">Converted to ASL animation</div>
+                    </div>
+                    <div class="hfi-actions">
+                        <button class="hfi-btn" title="Copy" onclick="copyText('Nice to meet you', this)">📋</button>
+                        <button class="hfi-btn" title="Speak" onclick="speakText('Nice to meet you')">🔊</button>
+                        <button class="hfi-btn danger" title="Delete" onclick="deleteItem(this)">🗑️</button>
+                    </div>
+                </div>
+
+                <div class="history-full-item" data-type="asl-to-text">
+                    <div class="hfi-icon qi-blue">🤟</div>
+                    <div class="hfi-body">
+                        <div class="hfi-meta">
+                            <span class="hfi-mode">ASL → Text</span>
+                            <span class="hfi-time">10:12 AM</span>
+                        </div>
+                        <div class="hfi-text">Please help me</div>
+                        <div class="hfi-sub">Detected with 79% confidence</div>
+                    </div>
+                    <div class="hfi-actions">
+                        <button class="hfi-btn" title="Copy" onclick="copyText('Please help me', this)">📋</button>
+                        <button class="hfi-btn" title="Speak" onclick="speakText('Please help me')">🔊</button>
+                        <button class="hfi-btn danger" title="Delete" onclick="deleteItem(this)">🗑️</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div class="empty-state" id="empty-state" style="display:none;">
+            <div class="empty-icon">📭</div>
+            <h3>No translations yet</h3>
+            <p>Your translation history will appear here.</p>
+            <a href="../index.html" class="btn-primary" style="margin-top:16px; text-decoration:none;">Start Translating</a>
+        </div>
+
+    </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-bottom-nav">
+    <a href="../index.html" class="mbn-item"><span>🏠</span><small>Home</small></a>
+    <a href="history.html"  class="mbn-item active"><span>🕐</span><small>History</small></a>
+    <a href="asl-to-speech.html" class="mbn-item"><span>🤟</span><small>ASL</small></a>
+    <a href="speech-to-asl.html" class="mbn-item"><span>🔤</span><small>Text</small></a>
+    <a href="settings.html" class="mbn-item"><span>⚙️</span><small>Settings</small></a>
+</nav>
+
+<script src="../js/history.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>
